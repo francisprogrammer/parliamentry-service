@@ -8,13 +8,15 @@ namespace PD.WebApi.Features.GetWeeks
         public int WeekNo { get; }
         public DateTime StartOfWeek { get; }
         public DateTime EndOfWeek { get; }
+        public bool IsCurrentWeek { get; }
 
-        public WeekViewModel(int year, int weekNo, DateTime startOfWeek, DateTime endOfWeek)
+        public WeekViewModel(int year, int weekNo, DateTime startOfWeek, DateTime endOfWeek, bool isCurrentWeek)
         {
             Year = year;
             WeekNo = weekNo;
             StartOfWeek = startOfWeek;
             EndOfWeek = endOfWeek;
+            IsCurrentWeek = isCurrentWeek;
         }
     }
 }
