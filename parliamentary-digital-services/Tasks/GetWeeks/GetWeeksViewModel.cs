@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PD.WebApi.Features.GetWeeks
+namespace PD.Services.Tasks.GetWeeks
 {
     public class GetWeeksViewModel
     {

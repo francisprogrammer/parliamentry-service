@@ -1,6 +1,6 @@
 using System;
 
-namespace PD.WebApi.Common
+namespace PD.Services.Tasks.GetDateAndTime
 {
     public interface IDateTimeService
     {

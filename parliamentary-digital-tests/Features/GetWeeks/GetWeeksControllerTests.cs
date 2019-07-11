@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
-using PD.WebApi.Common;
+using PD.Services.Common;
+using PD.Services.Tasks.GetDateAndTime;
+using PD.Services.Tasks.GetWeeks;
 using PD.WebApi.Features.GetWeeks;
 
 namespace PD.Tests.Features.GetWeeks
@@ -45,7 +47,7 @@ namespace PD.Tests.Features.GetWeeks
                 .Returns(ParseDate(currentDate));
             
             // act
-            var sut = new GetWeeksController(_stubDatetimeService, _stubGetWeeksSettings);
+            var sut = new GetWeeksController(new GetWeeksService(_stubDatetimeService, _stubGetWeeksSettings));
             var result = sut.GetWeeks();
 
             // assert
@@ -79,7 +81,7 @@ namespace PD.Tests.Features.GetWeeks
                     });
             
             // act
-            var sut = new GetWeeksController(_stubDatetimeService, _stubGetWeeksSettings);
+            var sut = new GetWeeksController(new GetWeeksService(_stubDatetimeService, _stubGetWeeksSettings));
             var result = sut.GetWeeks();
 
             // assert
@@ -107,7 +109,7 @@ namespace PD.Tests.Features.GetWeeks
                     });
             
             // act
-            var sut = new GetWeeksController(_stubDatetimeService, _stubGetWeeksSettings);
+            var sut = new GetWeeksController(new GetWeeksService(_stubDatetimeService, _stubGetWeeksSettings));
             var result = sut.GetWeeks();
 
             // assert

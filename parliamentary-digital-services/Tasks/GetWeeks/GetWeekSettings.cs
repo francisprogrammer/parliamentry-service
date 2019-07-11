@@ -1,4 +1,4 @@
-namespace PD.WebApi.Features.GetWeeks
+namespace PD.Services.Tasks.GetWeeks
 {
     public class GetWeekSettings
     {
