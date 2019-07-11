@@ -7,9 +7,19 @@ namespace PD.Services.Tasks.GetBusinessItems
     {
         public IEnumerable<BusinessItemModel> BusinessItems { get; }
         
-        public GetBusinessItemBetweenDatesResponse(bool isSuccess, IEnumerable<BusinessItemModel> businessItems) : base(isSuccess)
+        private GetBusinessItemBetweenDatesResponse(bool isSuccess, string message, IEnumerable<BusinessItemModel> businessItems) : base(isSuccess, message)
         {
             BusinessItems = businessItems;
         }
+
+        public static GetBusinessItemBetweenDatesResponse Failed(string errorMessage)
+        {
+            return new GetBusinessItemBetweenDatesResponse(false, errorMessage, null);
+        }
+
+        public static GetBusinessItemBetweenDatesResponse Success(IEnumerable<BusinessItemModel> @businessItemModels)
+        {
+            return new GetBusinessItemBetweenDatesResponse(true, string.Empty, businessItemModels);
+        }
     }
-}
+}   

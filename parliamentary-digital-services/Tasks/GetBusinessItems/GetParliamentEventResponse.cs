@@ -8,7 +8,7 @@ namespace PD.Services.Tasks.GetBusinessItems
     {
         public IEnumerable<Event> Events { get; }
         
-        public GetParliamentEventResponse(bool isSuccess, IEnumerable<Event> events) : base(isSuccess)
+        public GetParliamentEventResponse(bool isSuccess, IEnumerable<Event> events) : base(isSuccess, null)
         {
             Events = events;
         }

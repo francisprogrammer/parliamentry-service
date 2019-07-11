@@ -121,5 +121,26 @@ namespace PD.Tests.Features.GetBusinessItems
             Assert.That(response.Any, Is.EqualTo(true), "expected validation errors");
             Assert.That(response.ElementAt(0), Is.EqualTo("End date is required"));
         }
+        
+        [Test]
+        public async Task Return_bad_request_when_end_date_is_before_start_date()
+        {
+            // act
+            var result =
+                await _sut.GetBusinessItems(
+                    new GetBusinessItemsQuery
+                    {
+                        StartDate = new DateTime(2019,1,1),
+                        EndDate = new DateTime(2018,1,1)
+                    });
+            
+            // assert
+            Assert.That(result, Is.TypeOf<BadRequestObjectResult>());
+            
+            var response = (IEnumerable<string>) ((BadRequestObjectResult) result).Value;
+            
+            Assert.That(response.Any, Is.EqualTo(true), "expected validation errors");
+            Assert.That(response.ElementAt(0), Is.EqualTo("End date must come before start date"));
+        }
     }
 }
