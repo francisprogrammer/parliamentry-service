@@ -5,17 +5,22 @@ namespace PD.Services.Tasks.GetBusinessItemDetails
 {
     public class BusinessItemDetailsModel
     {
-        public DateTime StartDateAndTime { get; }
-        public DateTime EndDateAndTime { get; }
+        public int Id { get; }
+        public DateTime StartDate { get; }
+        public string StartTime { get; }
+        public DateTime EndDate { get; }
+        public string EndTime { get; }
         public string Description { get; }
         public string Category { get; }
         public IEnumerable<MemberItemViewModel> Members { get; }
 
-        public BusinessItemDetailsModel(DateTime startDateAndTime, DateTime endDateAndTime, string description,
-            string category, IEnumerable<MemberItemViewModel> members)
+        public BusinessItemDetailsModel(int id, DateTime startDate, string startTime, DateTime endDate, string endTime, string description, string category, IEnumerable<MemberItemViewModel> members)
         {
-            StartDateAndTime = startDateAndTime;
-            EndDateAndTime = endDateAndTime;
+            Id = id;
+            StartDate = startDate;
+            StartTime = startTime;
+            EndDate = endDate;
+            EndTime = endTime;
             Description = description;
             Category = category;
             Members = members;

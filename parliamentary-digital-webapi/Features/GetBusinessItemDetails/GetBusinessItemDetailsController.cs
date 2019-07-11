@@ -15,7 +15,7 @@ namespace PD.WebApi.Features.GetBusinessItemDetails
         }
 
         [HttpGet]
-        [Route("events/{int:id}")]
+        [Route("events/{id}")]
         public async Task<IActionResult> GetDetails(int id, [FromQuery] GetBusinessItemDetailsQuery getBusinessItemDetailsQuery)
         {
             if (getBusinessItemDetailsQuery.GetErrors().Any()) return BadRequest(getBusinessItemDetailsQuery.GetErrors());

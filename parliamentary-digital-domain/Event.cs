@@ -1,18 +1,28 @@
 using System;
+using System.Xml.Serialization;
 
 namespace PD.Domain
 {
     public class Event
     {
-        public DateTime StartDateAndTime { get; }
-        public DateTime EndDateAndTime { get; }
-        public string Description { get; }
+        [XmlAttribute]
+        public int Id { get; set; }
 
-        public Event(DateTime startDateAndTime, DateTime endDateAndTime, string description)
-        {
-            StartDateAndTime = startDateAndTime;
-            EndDateAndTime = endDateAndTime;
-            Description = description;
-        }
+        [XmlElement("StartDate")]
+        public DateTime StartDate { get; set; }
+
+        [XmlElement("StartTime")]
+        public string StartTime { get; set; }
+
+        [XmlElement("EndDate")]
+        public DateTime EndDate { get; set; }
+
+        [XmlElement("EndTime")]
+        public string EndTime { get; set; }
+
+        [XmlElement("Description")]
+        public string Description { get; set; }
+
+        [XmlElement("Members")]
     }
 }

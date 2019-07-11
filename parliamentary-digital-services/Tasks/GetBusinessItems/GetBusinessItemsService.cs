@@ -34,7 +34,7 @@ namespace PD.Services.Tasks.GetBusinessItems
                     .GetEvents(new GetParliamentEventsRequest(_parliamentEventsEndPointSettings.EndPoint, request.StartDate,
                         request.EndDate));
 
-            return GetBusinessItemBetweenDatesResponse.Success(response.Events.Select(@event => new BusinessItemModel(@event.StartDateAndTime, @event.EndDateAndTime, @event.Description)));
+            return GetBusinessItemBetweenDatesResponse.Success(response.Events.Event.Select(@event => new BusinessItemModel(@event.Id, @event.StartDate, @event.StartTime, @event.EndDate, @event.EndTime, @event.Description)));
         }
     }
 }

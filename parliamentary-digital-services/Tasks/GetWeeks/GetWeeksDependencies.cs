@@ -8,7 +8,7 @@ namespace PD.Services.Tasks.GetWeeks
         public static void AddGetWeeksDependencies(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IGetWeeks, GetWeeksService>();
-            serviceCollection.Configure<GetWeekSettings>(AppSettings.CreateConfigurationRoot().GetSection("PostalCodeGeolocationSettings"));
+            serviceCollection.Configure<GetWeekSettings>(AppSettings.CreateConfigurationRoot().GetSection("GetWeekSettings"));
         }
     }
 }

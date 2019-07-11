@@ -43,18 +43,29 @@ namespace PD.Tests.Features.GetBusinessItems
         public async Task Returns_business_items_between_dates()
         {
             // arrange
-            var startDateAndTime = new DateTime(2019, 1, 1, 10, 0, 0);
-            var endDateAndTime = new DateTime(2019, 1, 1, 12, 0, 0);
-            var dummyBusinessItemDescription = "any dummy business item description";
-
-            var events =
-                new List<Event>
-                {
-                    new Event(startDateAndTime, endDateAndTime, dummyBusinessItemDescription)
-                };
-
+            var startTime = "dummyEndTime";
+            var endTime = "dummyStartTime";
             var startDate = new DateTime(2019, 1, 1);
             var endDate = new DateTime(2019, 2, 1);
+            var eventId = 1;
+
+            var dummyBusinessItemDescription = "any dummy business item description";
+
+            var events = new Events
+            {
+                Event = new List<Event>
+                {
+                    new Event
+                    {
+                        Id = eventId,
+                        Description = dummyBusinessItemDescription,
+                        EndDate = endDate,
+                        EndTime = endTime,
+                        StartDate = startDate,
+                        StartTime = startTime
+                    }
+                }
+            };
 
             _stubGetParliamentEvents
                 .GetEvents(Arg.Is<GetParliamentEventsRequest>(request =>
@@ -77,8 +88,11 @@ namespace PD.Tests.Features.GetBusinessItems
 
             var response = (IEnumerable<BusinessItemModel>) ((OkObjectResult) result).Value;
 
-            Assert.That(response.ElementAt(0).StartDateAndTime, Is.EqualTo(startDateAndTime));
-            Assert.That(response.ElementAt(0).EndDateAndTime, Is.EqualTo(endDateAndTime));
+            Assert.That(response.ElementAt(0).Id, Is.EqualTo(eventId));
+            Assert.That(response.ElementAt(0).StartTime, Is.EqualTo(startTime));
+            Assert.That(response.ElementAt(0).StartDate, Is.EqualTo(startDate));
+            Assert.That(response.ElementAt(0).EndDate, Is.EqualTo(endDate));
+            Assert.That(response.ElementAt(0).EndTime, Is.EqualTo(endTime));
             Assert.That(response.ElementAt(0).Description, Is.EqualTo(dummyBusinessItemDescription));
         }
 

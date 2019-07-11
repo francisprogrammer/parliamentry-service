@@ -17,7 +17,7 @@ namespace PD.WebApi.Features.GetMemberDetails
         }
 
         [HttpGet]
-        [Route("members/{int:id}")]
+        [Route("members/{id}")]
         public async Task<IActionResult> GetDetails(int id)
         {
             var response = await _getMemberDetails.GetMemberDetails(new GetMemberDetailsRequest(id));

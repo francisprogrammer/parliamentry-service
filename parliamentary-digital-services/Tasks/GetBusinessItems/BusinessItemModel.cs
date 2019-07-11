@@ -4,14 +4,25 @@ namespace PD.Services.Tasks.GetBusinessItems
 {
     public class BusinessItemModel
     {
-        public DateTime StartDateAndTime { get; }
-        public DateTime EndDateAndTime { get; }
+        public int Id { get; }
+
+        public DateTime StartDate { get; }
+
+        public string StartTime { get; }
+
+        public DateTime EndDate { get; }
+
+        public string EndTime { get; }
+
         public string Description { get; }
 
-        public BusinessItemModel(DateTime startDateAndTime, DateTime endDateAndTime, string description)
+        public BusinessItemModel(int id, DateTime startDate, string startTime, DateTime endDate, string endTime, string description)
         {
-            StartDateAndTime = startDateAndTime;
-            EndDateAndTime = endDateAndTime;
+            Id = id;
+            StartDate = startDate;
+            StartTime = startTime;
+            EndDate = endDate;
+            EndTime = endTime;
             Description = description;
         }
     }

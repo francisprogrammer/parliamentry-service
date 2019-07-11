@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PD.Services.Common;
 using PD.Services.Tasks.GetBusinessItems;
+using PD.Services.Tasks.GetDateAndTime;
+using PD.Services.Tasks.GetMemberDetails;
+using PD.Services.Tasks.GetParliamentData;
 using PD.Services.Tasks.GetWeeks;
 
 namespace PD.WebApi
@@ -12,13 +16,18 @@ namespace PD.WebApi
     {
         public Startup()
         {
+            Configuration = AppSettings.CreateConfigurationRoot();
         }
 
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGetWeeksDependencies();
+            services.AddGetParliamentDataDependencies();
+            services.AddGetMemberDetailsDependencies();
+            services.AddGetDateAndTimeDependencies();
             services.AddGetBusinessItemsDependencies();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
