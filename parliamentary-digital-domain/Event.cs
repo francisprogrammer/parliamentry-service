@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace PD.Domain
@@ -22,7 +23,11 @@ namespace PD.Domain
 
         [XmlElement("Description")]
         public string Description { get; set; }
+        
+        [XmlElement("Category")]
+        public string Category { get; set; }
 
         [XmlElement("Members")]
+        public List<Member> Members { get; set; }
     }
 }

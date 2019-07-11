@@ -8,14 +8,14 @@ namespace PD.Services.Tasks.GetMemberDetails
     {
         public GetMemberDetailsModel GetMemberDetailsModel { get; }
 
-        private GetMemberDetailsResponse(bool isSuccess, GetMemberDetailsModel getMemberDetailsModel, IEnumerable<string> errorMessageses) : base(isSuccess, errorMessageses)
+        private GetMemberDetailsResponse(bool isSuccess, GetMemberDetailsModel getMemberDetailsModel, IEnumerable<string> errorMessages) : base(isSuccess, errorMessages)
         {
             GetMemberDetailsModel = getMemberDetailsModel;
         }
 
         public static GetMemberDetailsResponse Success(MemberDetails memberDetails)
         {
-            return new GetMemberDetailsResponse(true, new GetMemberDetailsModel(memberDetails.Party, memberDetails.MemberFrom, memberDetails.FullTitle), null);
+            return new GetMemberDetailsResponse(true, new GetMemberDetailsModel(memberDetails.Id, memberDetails.Party, memberDetails.MemberFrom, memberDetails.FullTitle), null);
         }
     }
 }

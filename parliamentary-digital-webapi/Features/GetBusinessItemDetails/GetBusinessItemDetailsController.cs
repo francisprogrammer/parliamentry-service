@@ -26,7 +26,7 @@ namespace PD.WebApi.Features.GetBusinessItemDetails
                         getBusinessItemDetailsQuery.EndDate.Value));
 
             return !response.IsSuccess
-                ? (IActionResult)BadRequest(response.ErrorMessageses)
+                ? (IActionResult)BadRequest(response.ErrorMessages)
                 : Ok(response.BusinessItemDetailsModel);
         }
     }

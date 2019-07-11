@@ -9,7 +9,7 @@ namespace PD.Services.Tasks.GetMemberDetails
     {
         public MemberDetails MemberDetails { get; }
 
-        public GetParliamentMemberDetailsResponse(bool isSuccess, MemberDetails memberDetails, IEnumerable<string> errorMessageses) : base(isSuccess, errorMessageses)
+        public GetParliamentMemberDetailsResponse(bool isSuccess, MemberDetails memberDetails, IEnumerable<string> errorMessages) : base(isSuccess, errorMessages)
         {
             MemberDetails = memberDetails;
         }

@@ -7,7 +7,7 @@ namespace PD.Services.Tasks.GetBusinessItems
     {
         public IEnumerable<BusinessItemModel> BusinessItems { get; }
 
-        private GetBusinessItemBetweenDatesResponse(bool isSuccess, IEnumerable<string> messageses, IEnumerable<BusinessItemModel> businessItems) : base(isSuccess, messageses)
+        private GetBusinessItemBetweenDatesResponse(bool isSuccess, IEnumerable<string> messages, IEnumerable<BusinessItemModel> businessItems) : base(isSuccess, messages)
         {
             BusinessItems = businessItems;
         }

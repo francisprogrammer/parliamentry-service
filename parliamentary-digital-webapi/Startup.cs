@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PD.Services.Common;
+using PD.Services.Tasks.GetBusinessItemDetails;
 using PD.Services.Tasks.GetBusinessItems;
 using PD.Services.Tasks.GetDateAndTime;
 using PD.Services.Tasks.GetMemberDetails;
@@ -29,6 +30,7 @@ namespace PD.WebApi
             services.AddGetMemberDetailsDependencies();
             services.AddGetDateAndTimeDependencies();
             services.AddGetBusinessItemsDependencies();
+            services.AddGetBusinessItemDetailsDependencies();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

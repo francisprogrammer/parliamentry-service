@@ -27,7 +27,7 @@ namespace PD.Services.Tasks.GetBusinessItems
                     .Validate(new ValidateBusinessItemsBusinessRulesRequest(request.StartDate, request.EndDate));
 
             if (!businessRuleResponse.IsSuccess)
-                return GetBusinessItemBetweenDatesResponse.Failed(businessRuleResponse.ErrorMessageses);
+                return GetBusinessItemBetweenDatesResponse.Failed(businessRuleResponse.ErrorMessages);
 
             var response =
                 await _getParliamentEvents

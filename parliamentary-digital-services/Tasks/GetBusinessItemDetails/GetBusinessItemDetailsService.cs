@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -28,7 +29,7 @@ namespace PD.Services.Tasks.GetBusinessItemDetails
                     .Validate(new ValidateBusinessItemsDetailsBusinessRulesRequest(request.Id, request.StartDate, request.EndDate));
 
             if (!businessRuleResponse.IsSuccess)
-                return GetBusinessItemDetailsResponse.Failed(businessRuleResponse.ErrorMessageses);
+                return GetBusinessItemDetailsResponse.Failed(businessRuleResponse.ErrorMessages);
 
             var response =
                 await _getParliamentEventDetails.GetParliamentEventDetails(
@@ -37,11 +38,16 @@ namespace PD.Services.Tasks.GetBusinessItemDetails
 
             return GetBusinessItemDetailsResponse.Success(
                 new BusinessItemDetailsModel(
-                    response.BusinessItemDetails.StartDateAndTime,
-                    response.BusinessItemDetails.EndDateAndTime,
+                    response.BusinessItemDetails.Id,
+                    response.BusinessItemDetails.StartDate,
+                    response.BusinessItemDetails.StartTime,
+                    response.BusinessItemDetails.EndDate,
+                    response.BusinessItemDetails.EndTime,
                     response.BusinessItemDetails.Description,
                     response.BusinessItemDetails.Category,
-                    response.BusinessItemDetails.Members.Select(memberItem => new MemberItemViewModel(memberItem.Id, memberItem.Name))));
+                    response.BusinessItemDetails.Members.Any() 
+                        ? response.BusinessItemDetails.Members.Select(memberItem => new MemberItemViewModel(memberItem.Id, memberItem.Name))
+                        : new List<MemberItemViewModel>()));
         }
-    }
+    } 
 }

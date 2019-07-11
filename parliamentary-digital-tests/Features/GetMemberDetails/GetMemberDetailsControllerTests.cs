@@ -32,7 +32,7 @@ namespace PD.Tests.Features.GetMemberDetails
             var memberId = 1;
 
             var dummyParty = "dummy party";
-            var dummyMember = "dummy member";
+            var dummyMemberFrom = "dummy member from";
             var dummyFullTitle = "dummy full title";
 
             stubGetParliamentMemberDetails
@@ -40,8 +40,12 @@ namespace PD.Tests.Features.GetMemberDetails
                     request =>
                         request.Id == memberId &&
                         request.Url == dummyMemberEndPoint))
-                .Returns(GetParliamentMemberDetailsResponse.Success(new MemberDetails(dummyParty, dummyMember,
-                    dummyFullTitle)));
+                .Returns(GetParliamentMemberDetailsResponse.Success(new MemberDetails
+                {
+                    Party = dummyParty,
+                    FullTitle = dummyFullTitle,
+                    MemberFrom = dummyMemberFrom
+                }));
 
             var sut = new GetMemberDetailsController(new GetMemberDetailsService(stubParliamentMemberDetailsEndPointSettings, stubGetParliamentMemberDetails));
 
@@ -55,7 +59,7 @@ namespace PD.Tests.Features.GetMemberDetails
 
             Assert.That(response.Party, Is.EqualTo(dummyParty));
             Assert.That(response.FullTitle, Is.EqualTo(dummyFullTitle));
-            Assert.That(response.MemberFrom, Is.EqualTo(dummyMember));
+            Assert.That(response.MemberFrom, Is.EqualTo(dummyMemberFrom));
         }
     }
 }

@@ -63,10 +63,10 @@ namespace PD.Tests.Features.GetBusinessItemDetails
                     new MemberItem(memberId, dummyMemberName)
                 };
 
-            var startDateAndTime = new DateTime(2019, 1, 1, 10, 0, 0);
-            var endDateAndTime = new DateTime(2019, 1, 1, 12, 0, 0);
+            var startTime = "dummy start time";
+            var endTime = "dummy end time";
 
-            var model = new BusinessItemDetails(startDateAndTime, endDateAndTime, dummyDescription, dummyCategory, members);
+            var model = new BusinessItemDetails(_eventId, _startDate, startTime, _endDate, endTime, dummyDescription, dummyCategory, members);
 
             _stubGetParliamentEventDetails
                 .GetParliamentEventDetails(
@@ -75,7 +75,7 @@ namespace PD.Tests.Features.GetBusinessItemDetails
                         request.StartDate == _startDate &&
                         request.EndDate == _endDate &&
                         request.Id == _eventId))
-                .Returns(new GetParliamentEventDetailsResponse(model));
+                .Returns(GetParliamentEventDetailsResponse.Success(model));
 
             var sut = new GetBusinessItemDetailsController(new GetBusinessItemDetailsService(_stubGetParliamentEventDetailsSettings, _stubGetParliamentEventDetails, _businessItemsDetailsBusinessRules));
 
@@ -94,8 +94,10 @@ namespace PD.Tests.Features.GetBusinessItemDetails
 
             var response = (BusinessItemDetailsModel) ((OkObjectResult) result).Value;
 
-            Assert.That(response.StartDateAndTime, Is.EqualTo(startDateAndTime));
-            Assert.That(response.EndDateAndTime, Is.EqualTo(endDateAndTime));
+            Assert.That(response.StartTime, Is.EqualTo(startTime));
+            Assert.That(response.StartDate, Is.EqualTo(_startDate));
+            Assert.That(response.EndTime, Is.EqualTo(endTime));
+            Assert.That(response.EndDate, Is.EqualTo(_endDate));
             Assert.That(response.Description, Is.EqualTo(dummyDescription));
             Assert.That(response.Category, Is.EqualTo(dummyCategory));
             Assert.That(response.Members.ElementAt(0).Id, Is.EqualTo(memberId));

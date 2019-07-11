@@ -5,12 +5,12 @@ namespace PD.Services.Common
     public abstract class Response
     {
         public bool IsSuccess { get; }
-        public IEnumerable<string> ErrorMessageses { get; }
+        public IEnumerable<string> ErrorMessages { get; }
 
-        protected Response(bool isSuccess, IEnumerable<string> errorMessageses)
+        protected Response(bool isSuccess, IEnumerable<string> errorMessages)
         {
             IsSuccess = isSuccess;
-            ErrorMessageses = errorMessageses;
+            ErrorMessages = errorMessages;
         }
     }
 }

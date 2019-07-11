@@ -1,16 +1,19 @@
+using System.Xml.Serialization;
+
 namespace PD.Domain
 {
     public class MemberDetails
     {
-        public string Party { get; }
-        public string MemberFrom { get; }
-        public string FullTitle { get; }
-
-        public MemberDetails(string party, string memberFrom, string fullTitle)
-        {
-            Party = party;
-            MemberFrom = memberFrom;
-            FullTitle = fullTitle;
-        }
+        [XmlAttribute("Member_Id")]
+        public int Id { get; set; }
+        
+        [XmlElement("Party")]
+        public string Party { get; set; }
+        
+        [XmlElement("MemberFrom")]
+        public string MemberFrom { get; set; }
+        
+        [XmlElement("FullTitle")]
+        public string FullTitle { get; set; }
     }
 }

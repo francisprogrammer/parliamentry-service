@@ -7,7 +7,7 @@ namespace PD.Services.Tasks.GetBusinessItemDetails
     {
         public BusinessItemDetailsModel BusinessItemDetailsModel { get; }
 
-        private GetBusinessItemDetailsResponse(bool isSuccess, BusinessItemDetailsModel businessItemDetailsModel, IEnumerable<string> errorMessageses) : base(isSuccess, errorMessageses)
+        private GetBusinessItemDetailsResponse(bool isSuccess, BusinessItemDetailsModel businessItemDetailsModel, IEnumerable<string> errorMessages) : base(isSuccess, errorMessages)
         {
             BusinessItemDetailsModel = businessItemDetailsModel;
         }

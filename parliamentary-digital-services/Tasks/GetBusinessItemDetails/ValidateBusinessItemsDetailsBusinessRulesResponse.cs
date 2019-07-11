@@ -5,7 +5,7 @@ namespace PD.Services.Tasks.GetBusinessItemDetails
 {
     public class ValidateBusinessItemsDetailsBusinessRulesResponse : Response
     {
-        private ValidateBusinessItemsDetailsBusinessRulesResponse(bool isSuccess, IEnumerable<string> errorMessageses) : base(isSuccess, errorMessageses)
+        private ValidateBusinessItemsDetailsBusinessRulesResponse(bool isSuccess, IEnumerable<string> errorMessages) : base(isSuccess, errorMessages)
         {
         }
 
