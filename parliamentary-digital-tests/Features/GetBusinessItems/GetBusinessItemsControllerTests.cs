@@ -57,7 +57,7 @@ namespace PD.Tests.Features.GetBusinessItems
             var endDate = new DateTime(2019, 2, 1);
 
             _stubGetParliamentEvents
-                .Get(Arg.Is<GetParliamentEventsRequest>(request => 
+                .GetEvents(Arg.Is<GetParliamentEventsRequest>(request => 
                     request.EndDate == endDate &&
                     request.StartDate == startDate &&
                     request.Url == _dummyEventEndPoint))

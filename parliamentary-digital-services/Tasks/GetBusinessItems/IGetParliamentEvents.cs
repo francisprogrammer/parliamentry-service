@@ -4,6 +4,6 @@ namespace PD.Services.Tasks.GetBusinessItems
 {
     public interface IGetParliamentEvents
     {
-        Task<GetParliamentEventResponse> Get(GetParliamentEventsRequest request);
+        Task<GetParliamentEventResponse> GetEvents(GetParliamentEventsRequest request);
     }
 }

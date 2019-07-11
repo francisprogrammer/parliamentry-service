@@ -18,6 +18,7 @@ namespace PD.WebApi.Features.GetWeeks
             _getWeeks = getWeeks;
         }
 
+        [HttpGet]
         [Route("weeks")]
         public IActionResult GetWeeks()
         {

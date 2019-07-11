@@ -14,6 +14,7 @@ namespace PD.WebApi.Features.GetBusinessItems
             _getBusinessItemBetweenDates = getBusinessItemBetweenDates;
         }
         
+        [HttpGet]
         [Route("events")]
         public async Task<IActionResult> GetBusinessItems([FromQuery] GetBusinessItemsQuery businessItemsQuery)
         {

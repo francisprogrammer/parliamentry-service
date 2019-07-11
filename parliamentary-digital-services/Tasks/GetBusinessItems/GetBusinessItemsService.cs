@@ -21,7 +21,7 @@ namespace PD.Services.Tasks.GetBusinessItems
         {
             var response =
                 await _getParliamentEvents
-                    .Get(new GetParliamentEventsRequest(_parliamentEventsEndPointSettings.EndPoint, request.StartDate,
+                    .GetEvents(new GetParliamentEventsRequest(_parliamentEventsEndPointSettings.EndPoint, request.StartDate,
                         request.EndDate));
             
             return new GetBusinessItemBetweenDatesResponse(true, response.Events.Select(@event => new BusinessItemModel(@event.StartDateAndTime, @event.EndDateAndTime, @event.Description)));
