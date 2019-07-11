@@ -21,16 +21,16 @@ namespace PD.Services.Tasks.GetWeeks
             _datetimeService = datetimeService;
             _getWeeksSettings = getWeeksSettings.Value;
         }
-        
+
         public GetWeeksResponse GetWeeks()
         {
-            var weekViewModels = 
+            var weekViewModels =
                 CreateWeeks()
                     .Select(week => new WeekViewModel(week.Year, week.WeekNo, week.StartOfWeek, week.EndOfWeek, week.IsCurrentWeek));
-            
+
             return new GetWeeksResponse(new GetWeeksViewModel(weekViewModels));
         }
-        
+
         private IEnumerable<Week> CreateWeeks()
         {
             return
@@ -39,8 +39,8 @@ namespace PD.Services.Tasks.GetWeeks
                     {
                         Year = date.Year,
                         WeekNo = GetWeekOfYear(date),
-                        StartOfWeekDate = StartOfWeekDate(date, DayOfWeek.Sunday),
-                        EndOfWeekDate = EndOfWeekDate(date, DayOfWeek.Sunday)
+                        StartOfWeekDate = StartOfWeekDate(date, DayOfWeek.Monday),
+                        EndOfWeekDate = EndOfWeekDate(date, DayOfWeek.Monday)
                     })
                     .Select(date => new Week(date.Key.Year, date.Key.WeekNo, date.Key.StartOfWeekDate, date.Key.EndOfWeekDate, IsCurrentWeek(date.Key.StartOfWeekDate, date.Key.EndOfWeekDate)));
         }
@@ -49,18 +49,18 @@ namespace PD.Services.Tasks.GetWeeks
         {
             return _datetimeService.GetDate() >= startDate && _datetimeService.GetDate() < endDate;
         }
-        
+
         private IEnumerable<DateTime> GetAllDatesForNumberWeeksToInclude()
         {
             var allDatesForNumberWeeksToInclude = new List<DateTime>();
 
             var daysInAWeek = 7;
-            
+
             for (var date = _datetimeService.GetDate();
                 date <= _datetimeService.GetDate().AddDays(daysInAWeek * _getWeeksSettings.NumberOfWeeksToInclude);
                 date = date.AddDays(1))
                 allDatesForNumberWeeksToInclude.Add(date);
-            
+
             return allDatesForNumberWeeksToInclude;
         }
 
@@ -74,7 +74,7 @@ namespace PD.Services.Tasks.GetWeeks
             return
                 CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date,
                 CultureInfo.CurrentCulture.DateTimeFormat.CalendarWeekRule,
-                CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek);
+                DayOfWeek.Monday);
         }
 
         private static DateTime StartOfWeekDate(DateTime dateTime, DayOfWeek startOfWeek)

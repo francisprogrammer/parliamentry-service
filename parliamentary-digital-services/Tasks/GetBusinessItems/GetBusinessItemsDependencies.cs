@@ -11,6 +11,8 @@ namespace PD.Services.Tasks.GetBusinessItems
             
             serviceCollection.AddTransient<IGetParliamentEvents, GetParliamentDataService>();
             serviceCollection.AddTransient<IGetBusinessItemBetweenDates, GetBusinessItemsService>();
+            serviceCollection.AddTransient<IValidateBusinessItemsBusinessRules, BusinessItemsBusinessRules>();
+
             serviceCollection.Configure<ParliamentEventsEndPointSettings>(AppSettings.CreateConfigurationRoot().GetSection("ParliamentEventsEndPointSettings"));
         }
     }

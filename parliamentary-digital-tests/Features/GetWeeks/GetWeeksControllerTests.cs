@@ -23,11 +23,11 @@ namespace PD.Tests.Features.GetWeeks
         {
             _stubGetWeeksSettings = Substitute.For<IOptions<GetWeekSettings>>();
             _stubDatetimeService = Substitute.For<IDateTimeService>();
-            
+
             _stubDatetimeService
                 .GetDate()
                 .Returns(ParseDate("30/12/2018"));
-            
+
             _stubGetWeeksSettings
                 .Value
                 .Returns(
@@ -36,16 +36,16 @@ namespace PD.Tests.Features.GetWeeks
                         NumberOfWeeksToInclude = 0
                     });
         }
-        
-        [TestCase("01/01/2019", 1, "30/12/2018", "05/01/2019")]
-        [TestCase("09/01/2019", 2, "06/01/2019", "12/01/2019")]
+
+        [TestCase("01/01/2019", 1, "31/12/2018", "06/01/2019")]
+        [TestCase("09/01/2019", 2, "07/01/2019", "13/01/2019")]
         public void Returns_week_for_date(string currentDate, int weekNo, string startDate, string endDate)
         {
             // arrange
             _stubDatetimeService
                 .GetDate()
                 .Returns(ParseDate(currentDate));
-            
+
             // act
             var sut = new GetWeeksController(new GetWeeksService(_stubDatetimeService, _stubGetWeeksSettings));
             var result = sut.GetWeeks();
@@ -53,11 +53,11 @@ namespace PD.Tests.Features.GetWeeks
             // assert
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult) result).Value, Is.TypeOf<GetWeeksViewModel>());
-            
+
             var response = (GetWeeksViewModel) ((OkObjectResult) result).Value;
-            
+
             Assert.That(response.Weeks.Count(), Is.EqualTo(1), "expected only 1 weeks");
-            
+
             Assert.That(response.Weeks.ElementAt(0).Year, Is.EqualTo(ParseDate(currentDate).Year));
             Assert.That(response.Weeks.ElementAt(0).WeekNo, Is.EqualTo(weekNo), $"expected week to be {weekNo}");
             Assert.That(response.Weeks.ElementAt(0).StartOfWeek.Date, Is.EqualTo(ParseDate(startDate).Date));
@@ -70,8 +70,8 @@ namespace PD.Tests.Features.GetWeeks
         {
             _stubDatetimeService
                 .GetDate()
-                .Returns(ParseDate("06/01/2019"));
-            
+                .Returns(ParseDate("07/01/2019"));
+
             _stubGetWeeksSettings
                 .Value
                 .Returns(
@@ -79,17 +79,17 @@ namespace PD.Tests.Features.GetWeeks
                     {
                         NumberOfWeeksToInclude = numberOfWeeksToInclude
                     });
-            
+
             // act
             var sut = new GetWeeksController(new GetWeeksService(_stubDatetimeService, _stubGetWeeksSettings));
             var result = sut.GetWeeks();
-
+            var firstDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
             // assert
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult) result).Value, Is.TypeOf<GetWeeksViewModel>());
-            
+
             var response = (GetWeeksViewModel) ((OkObjectResult) result).Value;
-            
+
             Assert.That(response.Weeks.Count(), Is.EqualTo(expected), $"expected only {expected} weeks");
         }
 
@@ -98,8 +98,8 @@ namespace PD.Tests.Features.GetWeeks
         {
             _stubDatetimeService
                 .GetDate()
-                .Returns(ParseDate("06/01/2019"));
-            
+                .Returns(ParseDate("07/01/2019"));
+
             _stubGetWeeksSettings
                 .Value
                 .Returns(
@@ -107,7 +107,7 @@ namespace PD.Tests.Features.GetWeeks
                     {
                         NumberOfWeeksToInclude = 1
                     });
-            
+
             // act
             var sut = new GetWeeksController(new GetWeeksService(_stubDatetimeService, _stubGetWeeksSettings));
             var result = sut.GetWeeks();
@@ -115,9 +115,9 @@ namespace PD.Tests.Features.GetWeeks
             // assert
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult) result).Value, Is.TypeOf<GetWeeksViewModel>());
-            
+
             var response = (GetWeeksViewModel) ((OkObjectResult) result).Value;
-            
+
             Assert.That(response.Weeks.ElementAt(0).IsCurrentWeek, Is.EqualTo(true), "expected to be current week");
             Assert.That(response.Weeks.ElementAt(0).WeekNo, Is.EqualTo(2), "expected week to be 2");
             Assert.That(response.Weeks.ElementAt(1).IsCurrentWeek, Is.EqualTo(false), "expected to be current week");

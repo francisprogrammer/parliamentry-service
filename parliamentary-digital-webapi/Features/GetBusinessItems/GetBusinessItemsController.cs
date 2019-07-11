@@ -13,19 +13,21 @@ namespace PD.WebApi.Features.GetBusinessItems
         {
             _getBusinessItemBetweenDates = getBusinessItemBetweenDates;
         }
-        
+
         [HttpGet]
         [Route("events")]
         public async Task<IActionResult> GetBusinessItems([FromQuery] GetBusinessItemsQuery businessItemsQuery)
         {
             if (businessItemsQuery.GetErrors().Any()) return BadRequest(businessItemsQuery.GetErrors());
-            
+
             var response =
                 await _getBusinessItemBetweenDates
                     .GetBusinessItemBetweenDates(new GetBusinessItemBetweenDatesRequest(businessItemsQuery.StartDate.Value,
                         businessItemsQuery.EndDate.Value));
-            
-            return Ok(response.BusinessItems);
+
+            return !response.IsSuccess
+                ? (IActionResult)BadRequest(response.ErrorMessageses)
+                : Ok(response.BusinessItems);
         }
     }
 }

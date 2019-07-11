@@ -15,8 +15,4 @@
     <ProjectReference Include="..\parliamentary-digital-services\parliamentary-digital-services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\GetMemberDetails" />
-  </ItemGroup>
-
 </Project>

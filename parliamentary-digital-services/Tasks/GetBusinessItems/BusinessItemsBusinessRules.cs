@@ -1,11 +1,20 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace PD.Services.Tasks.GetBusinessItems
 {
     public class BusinessItemsBusinessRules : IValidateBusinessItemsBusinessRules
     {
-        public ValidateBusinessItemsBusinessRulesResponse ValidateBusinessItemsBusinessRules(
-            ValidateBusinessItemsBusinessRulesRequest request)
+        public ValidateBusinessItemsBusinessRulesResponse Validate(ValidateBusinessItemsBusinessRulesRequest request)
         {
-            return null;
+            var violations = new List<string>();
+
+            if (request.StartDate.Date > request.EndDate.Date)
+                violations.Add("End date must come before start date");
+
+            return violations.Any()
+                ? ValidateBusinessItemsBusinessRulesResponse.Failed(violations)
+                : ValidateBusinessItemsBusinessRulesResponse.Success();
         }
     }
 }

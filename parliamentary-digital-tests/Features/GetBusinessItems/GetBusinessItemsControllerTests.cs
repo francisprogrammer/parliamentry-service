@@ -25,9 +25,9 @@ namespace PD.Tests.Features.GetBusinessItems
         {
             _stubGetParliamentEvents = Substitute.For<IGetParliamentEvents>();
             _stubParliamentEventsEndPointSettings = Substitute.For<IOptions<ParliamentEventsEndPointSettings>>();
-            
+
             _dummyEventEndPoint = "dummy event end point";
-            
+
             _stubParliamentEventsEndPointSettings
                 .Value
                 .Returns(
@@ -35,10 +35,10 @@ namespace PD.Tests.Features.GetBusinessItems
                     {
                         EndPoint = _dummyEventEndPoint
                     });
-            
-            _sut = new GetBusinessItemsController(new GetBusinessItemsService(_stubParliamentEventsEndPointSettings, _stubGetParliamentEvents));
+
+            _sut = new GetBusinessItemsController(new GetBusinessItemsService(_stubParliamentEventsEndPointSettings, _stubGetParliamentEvents, new BusinessItemsBusinessRules()));
         }
-        
+
         [Test]
         public async Task Returns_business_items_between_dates()
         {
@@ -46,18 +46,18 @@ namespace PD.Tests.Features.GetBusinessItems
             var startDateAndTime = new DateTime(2019, 1, 1, 10, 0, 0);
             var endDateAndTime = new DateTime(2019, 1, 1, 12, 0, 0);
             var dummyBusinessItemDescription = "any dummy business item description";
-            
+
             var events =
                 new List<Event>
                 {
                     new Event(startDateAndTime, endDateAndTime, dummyBusinessItemDescription)
                 };
-            
+
             var startDate = new DateTime(2019, 1, 1);
             var endDate = new DateTime(2019, 2, 1);
 
             _stubGetParliamentEvents
-                .GetEvents(Arg.Is<GetParliamentEventsRequest>(request => 
+                .GetEvents(Arg.Is<GetParliamentEventsRequest>(request =>
                     request.EndDate == endDate &&
                     request.StartDate == startDate &&
                     request.Url == _dummyEventEndPoint))
@@ -71,12 +71,12 @@ namespace PD.Tests.Features.GetBusinessItems
                         StartDate = startDate,
                         EndDate = endDate
                     });
-            
+
             // assert
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            
+
             var response = (IEnumerable<BusinessItemModel>) ((OkObjectResult) result).Value;
-            
+
             Assert.That(response.ElementAt(0).StartDateAndTime, Is.EqualTo(startDateAndTime));
             Assert.That(response.ElementAt(0).EndDateAndTime, Is.EqualTo(endDateAndTime));
             Assert.That(response.ElementAt(0).Description, Is.EqualTo(dummyBusinessItemDescription));
@@ -92,16 +92,16 @@ namespace PD.Tests.Features.GetBusinessItems
                     {
                         EndDate = new DateTime(2019,1,1)
                     });
-            
+
             // assert
             Assert.That(result, Is.TypeOf<BadRequestObjectResult>());
-            
+
             var response = (IEnumerable<string>) ((BadRequestObjectResult) result).Value;
-            
+
             Assert.That(response.Any, Is.EqualTo(true), "expected validation errors");
             Assert.That(response.ElementAt(0), Is.EqualTo("Start date is required"));
         }
-        
+
         [Test]
         public async Task Return_bad_request_when_end_date_is_missing()
         {
@@ -112,16 +112,16 @@ namespace PD.Tests.Features.GetBusinessItems
                     {
                         StartDate = new DateTime(2019,1,1)
                     });
-            
+
             // assert
             Assert.That(result, Is.TypeOf<BadRequestObjectResult>());
-            
+
             var response = (IEnumerable<string>) ((BadRequestObjectResult) result).Value;
-            
+
             Assert.That(response.Any, Is.EqualTo(true), "expected validation errors");
             Assert.That(response.ElementAt(0), Is.EqualTo("End date is required"));
         }
-        
+
         [Test]
         public async Task Return_bad_request_when_end_date_is_before_start_date()
         {
@@ -133,13 +133,13 @@ namespace PD.Tests.Features.GetBusinessItems
                         StartDate = new DateTime(2019,1,1),
                         EndDate = new DateTime(2018,1,1)
                     });
-            
+
             // assert
             Assert.That(result, Is.TypeOf<BadRequestObjectResult>());
-            
+
             var response = (IEnumerable<string>) ((BadRequestObjectResult) result).Value;
-            
-            Assert.That(response.Any, Is.EqualTo(true), "expected validation errors");
+
+            Assert.That(response.Any(), Is.EqualTo(true), "expected validation errors");
             Assert.That(response.ElementAt(0), Is.EqualTo("End date must come before start date"));
         }
     }

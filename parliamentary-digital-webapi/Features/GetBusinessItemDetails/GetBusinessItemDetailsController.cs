@@ -19,13 +19,15 @@ namespace PD.WebApi.Features.GetBusinessItemDetails
         public async Task<IActionResult> GetDetails(int id, [FromQuery] GetBusinessItemDetailsQuery getBusinessItemDetailsQuery)
         {
             if (getBusinessItemDetailsQuery.GetErrors().Any()) return BadRequest(getBusinessItemDetailsQuery.GetErrors());
-            
+
             var response =
                 await _getBusinessItemDetails
                     .GetBusinessItemDetails(new GetBusinessItemDetailsRequest(id, getBusinessItemDetailsQuery.StartDate.Value,
                         getBusinessItemDetailsQuery.EndDate.Value));
-            
-            return Ok(response.BusinessItemDetailsModel);
+
+            return !response.IsSuccess
+                ? (IActionResult)BadRequest(response.ErrorMessageses)
+                : Ok(response.BusinessItemDetailsModel);
         }
     }
 }

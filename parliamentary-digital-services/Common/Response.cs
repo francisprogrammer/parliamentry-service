@@ -1,14 +1,16 @@
+using System.Collections.Generic;
+
 namespace PD.Services.Common
 {
     public abstract class Response
     {
         public bool IsSuccess { get; }
-        public string ErrorMessage { get; }
+        public IEnumerable<string> ErrorMessageses { get; }
 
-        protected Response(bool isSuccess, string errorMessage)
+        protected Response(bool isSuccess, IEnumerable<string> errorMessageses)
         {
             IsSuccess = isSuccess;
-            ErrorMessage = errorMessage;
+            ErrorMessageses = errorMessageses;
         }
     }
 }

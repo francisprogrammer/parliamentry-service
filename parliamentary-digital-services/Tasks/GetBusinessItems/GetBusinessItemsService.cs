@@ -19,24 +19,21 @@ namespace PD.Services.Tasks.GetBusinessItems
             _validateBusinessItemsBusinessRules = validateBusinessItemsBusinessRules;
             _parliamentEventsEndPointSettings = parliamentEventsEndPointSettings.Value;
         }
-        
+
         public async Task<GetBusinessItemBetweenDatesResponse> GetBusinessItemBetweenDates(GetBusinessItemBetweenDatesRequest request)
         {
             var businessRuleResponse =
                 _validateBusinessItemsBusinessRules
-                    .ValidateBusinessItemsBusinessRules(
-                        new ValidateBusinessItemsBusinessRulesRequest(request.StartDate, request.EndDate));
+                    .Validate(new ValidateBusinessItemsBusinessRulesRequest(request.StartDate, request.EndDate));
 
             if (!businessRuleResponse.IsSuccess)
-            {
-                return GetBusinessItemBetweenDatesResponse.Failed(businessRuleResponse.ErrorMessage);
-            }
-            
+                return GetBusinessItemBetweenDatesResponse.Failed(businessRuleResponse.ErrorMessageses);
+
             var response =
                 await _getParliamentEvents
                     .GetEvents(new GetParliamentEventsRequest(_parliamentEventsEndPointSettings.EndPoint, request.StartDate,
                         request.EndDate));
-            
+
             return GetBusinessItemBetweenDatesResponse.Success(response.Events.Select(@event => new BusinessItemModel(@event.StartDateAndTime, @event.EndDateAndTime, @event.Description)));
         }
     }
