@@ -39,9 +39,9 @@ namespace PD.Services.Tasks.GetBusinessItemDetails
             return GetBusinessItemDetailsResponse.Success(
                 new BusinessItemDetailsModel(
                     response.BusinessItemDetails.Id,
-                    response.BusinessItemDetails.StartDate,
+                    response.BusinessItemDetails.StartDate.ToLongDateString(),
                     response.BusinessItemDetails.StartTime,
-                    response.BusinessItemDetails.EndDate,
+                    response.BusinessItemDetails.EndDate.ToLongDateString(),
                     response.BusinessItemDetails.EndTime,
                     response.BusinessItemDetails.Description,
                     response.BusinessItemDetails.Category,

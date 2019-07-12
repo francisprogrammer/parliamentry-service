@@ -37,8 +37,8 @@ namespace PD.Tests.IngregationTests
             var model = JsonConvert.DeserializeObject<IEnumerable<BusinessItemModel>>(value);
 
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(model.First().Id, Is.EqualTo(3564));
-            Assert.That(model.Last().Id, Is.EqualTo(5692));
+            Assert.That(model.First().Id, Is.EqualTo(5543));
+            Assert.That(model.Last().Id, Is.EqualTo(5552));
         }
 
         [Test]

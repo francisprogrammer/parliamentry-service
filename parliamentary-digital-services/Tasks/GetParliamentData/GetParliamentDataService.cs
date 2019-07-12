@@ -24,8 +24,18 @@ namespace PD.Services.Tasks.GetParliamentData
                         $"{request.Url}?startdate={request.StartDate:yyyy-MM-dd}&enddate={request.EndDate:yyyy-MM-dd}");
                     var response = await result.Content.ReadAsStringAsync();
                     var xmlSerialize = new XmlSerializer(typeof(Events));
-                    return GetParliamentEventResponse.Success(
-                        (Events) xmlSerialize.Deserialize(new StringReader(response)));
+                    var events = (Events) xmlSerialize.Deserialize(new StringReader(response));
+
+                    events.Event = 
+                        events
+                            .Event
+                            .Where(
+                                x =>
+                                    x.Type.Equals("Main Chamber", StringComparison.OrdinalIgnoreCase) &&
+                                    x.House.Equals("Commons", StringComparison.OrdinalIgnoreCase))
+                            .ToList();
+                    
+                    return GetParliamentEventResponse.Success(events);
                 }
                 catch (Exception e)
                 {

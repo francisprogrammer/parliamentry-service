@@ -26,7 +26,7 @@ namespace PD.Services.Tasks.GetWeeks
         {
             var weekViewModels =
                 CreateWeeks()
-                    .Select(week => new WeekViewModel(week.Year, week.WeekNo, week.StartOfWeek, week.EndOfWeek, week.IsCurrentWeek));
+                    .Select(week => new WeekViewModel(week.Year, week.WeekNo, week.StartOfWeek.ToString("dd-MM-yyyy"), week.EndOfWeek.ToString("dd-MM-yyyy"), week.IsCurrentWeek));
 
             return new GetWeeksResponse(new GetWeeksViewModel(weekViewModels));
         }
@@ -71,9 +71,11 @@ namespace PD.Services.Tasks.GetWeeks
 
         private static int GetWeekOfYear(DateTime date)
         {
+            var cultureInfo = new CultureInfo("en-GB");
+            
             return
-                CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date,
-                CultureInfo.CurrentCulture.DateTimeFormat.CalendarWeekRule,
+                cultureInfo.Calendar.GetWeekOfYear(date,
+                    cultureInfo.DateTimeFormat.CalendarWeekRule,
                 DayOfWeek.Monday);
         }
 

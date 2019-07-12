@@ -24,10 +24,17 @@ namespace PD.Domain
         [XmlElement("Description")]
         public string Description { get; set; }
         
+        [XmlElement("Type")]
+        public string Type { get; set; }
+        
+        [XmlElement("House")]
+        public string House { get; set; }
+        
         [XmlElement("Category")]
         public string Category { get; set; }
 
-        [XmlElement("Members")]
+        [XmlArrayItem("Member", IsNullable=false)]
+        [XmlArray("Members")]
         public List<Member> Members { get; set; }
     }
 }

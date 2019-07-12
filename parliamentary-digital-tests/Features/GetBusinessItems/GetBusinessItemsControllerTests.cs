@@ -43,8 +43,8 @@ namespace PD.Tests.Features.GetBusinessItems
         public async Task Returns_business_items_between_dates()
         {
             // arrange
-            var startTime = "dummyEndTime";
-            var endTime = "dummyStartTime";
+            var startTime = new DateTime(2019, 1, 1, 10,0,0).ToLongDateString();
+            var endTime = new DateTime(2019, 1, 1, 11,0,0).ToLongDateString();
             var startDate = new DateTime(2019, 1, 1);
             var endDate = new DateTime(2019, 2, 1);
             var eventId = 1;
@@ -90,8 +90,8 @@ namespace PD.Tests.Features.GetBusinessItems
 
             Assert.That(response.ElementAt(0).Id, Is.EqualTo(eventId));
             Assert.That(response.ElementAt(0).StartTime, Is.EqualTo(startTime));
-            Assert.That(response.ElementAt(0).StartDate, Is.EqualTo(startDate));
-            Assert.That(response.ElementAt(0).EndDate, Is.EqualTo(endDate));
+            Assert.That(response.ElementAt(0).StartDate, Is.EqualTo(startDate.ToLongDateString()));
+            Assert.That(response.ElementAt(0).EndDate, Is.EqualTo(endDate.ToLongDateString()));
             Assert.That(response.ElementAt(0).EndTime, Is.EqualTo(endTime));
             Assert.That(response.ElementAt(0).Description, Is.EqualTo(dummyBusinessItemDescription));
         }

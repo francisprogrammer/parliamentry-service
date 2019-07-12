@@ -95,9 +95,9 @@ namespace PD.Tests.Features.GetBusinessItemDetails
             var response = (BusinessItemDetailsModel) ((OkObjectResult) result).Value;
 
             Assert.That(response.StartTime, Is.EqualTo(startTime));
-            Assert.That(response.StartDate, Is.EqualTo(_startDate));
+            Assert.That(response.StartDate, Is.EqualTo(_startDate.ToLongDateString()));
             Assert.That(response.EndTime, Is.EqualTo(endTime));
-            Assert.That(response.EndDate, Is.EqualTo(_endDate));
+            Assert.That(response.EndDate, Is.EqualTo(_endDate.ToLongDateString()));
             Assert.That(response.Description, Is.EqualTo(dummyDescription));
             Assert.That(response.Category, Is.EqualTo(dummyCategory));
             Assert.That(response.Members.ElementAt(0).Id, Is.EqualTo(memberId));

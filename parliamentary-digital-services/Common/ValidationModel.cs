@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PD.Services.Common
 {
@@ -12,5 +13,10 @@ namespace PD.Services.Common
         }
 
         public abstract IEnumerable<string> GetErrors();
+
+        public bool HasErrors()
+        {
+            return GetErrors().Any();
+        }
     }
 }

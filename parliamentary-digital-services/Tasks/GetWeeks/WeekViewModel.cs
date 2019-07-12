@@ -6,11 +6,11 @@ namespace PD.Services.Tasks.GetWeeks
     {
         public int Year { get; }
         public int WeekNo { get; }
-        public DateTime StartOfWeek { get; }
-        public DateTime EndOfWeek { get; }
+        public string StartOfWeek { get; }
+        public string EndOfWeek { get; }
         public bool IsCurrentWeek { get; }
 
-        public WeekViewModel(int year, int weekNo, DateTime startOfWeek, DateTime endOfWeek, bool isCurrentWeek)
+        public WeekViewModel(int year, int weekNo, string startOfWeek, string endOfWeek, bool isCurrentWeek)
         {
             Year = year;
             WeekNo = weekNo;

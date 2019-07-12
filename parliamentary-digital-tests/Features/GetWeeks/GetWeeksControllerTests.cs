@@ -60,8 +60,8 @@ namespace PD.Tests.Features.GetWeeks
 
             Assert.That(response.Weeks.ElementAt(0).Year, Is.EqualTo(ParseDate(currentDate).Year));
             Assert.That(response.Weeks.ElementAt(0).WeekNo, Is.EqualTo(weekNo), $"expected week to be {weekNo}");
-            Assert.That(response.Weeks.ElementAt(0).StartOfWeek.Date, Is.EqualTo(ParseDate(startDate).Date));
-            Assert.That(response.Weeks.ElementAt(0).EndOfWeek.Date, Is.EqualTo(ParseDate(endDate).Date));
+            Assert.That(response.Weeks.ElementAt(0).StartOfWeek, Is.EqualTo(ParseDate(startDate).Date.ToString("dd-MM-yyyy")));
+            Assert.That(response.Weeks.ElementAt(0).EndOfWeek, Is.EqualTo(ParseDate(endDate).Date.ToString("dd-MM-yyyy")));
         }
 
         [TestCase(1, 2)]

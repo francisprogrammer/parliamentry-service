@@ -18,7 +18,7 @@ namespace PD.WebApi.Features.GetBusinessItems
         [Route("events")]
         public async Task<IActionResult> GetBusinessItems([FromQuery] GetBusinessItemsQuery businessItemsQuery)
         {
-            if (businessItemsQuery.GetErrors().Any()) return BadRequest(businessItemsQuery.GetErrors());
+            if (businessItemsQuery.HasErrors()) return BadRequest(businessItemsQuery.GetErrors());
 
             var response =
                 await _getBusinessItemBetweenDates

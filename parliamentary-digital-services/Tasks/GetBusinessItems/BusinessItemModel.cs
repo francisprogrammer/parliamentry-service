@@ -6,17 +6,17 @@ namespace PD.Services.Tasks.GetBusinessItems
     {
         public int Id { get; }
 
-        public DateTime StartDate { get; }
+        public string StartDate { get; }
 
         public string StartTime { get; }
 
-        public DateTime EndDate { get; }
+        public string EndDate { get; }
 
         public string EndTime { get; }
 
         public string Description { get; }
 
-        public BusinessItemModel(int id, DateTime startDate, string startTime, DateTime endDate, string endTime, string description)
+        public BusinessItemModel(int id, string startDate, string startTime, string endDate, string endTime, string description)
         {
             Id = id;
             StartDate = startDate;
