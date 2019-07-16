@@ -73,10 +73,7 @@ namespace PD.Services.Tasks.GetWeeks
         {
             var cultureInfo = new CultureInfo("en-GB");
             
-            return
-                cultureInfo.Calendar.GetWeekOfYear(date,
-                    cultureInfo.DateTimeFormat.CalendarWeekRule,
-                DayOfWeek.Monday);
+            return cultureInfo.Calendar.GetWeekOfYear(date, cultureInfo.DateTimeFormat.CalendarWeekRule, DayOfWeek.Monday);
         }
 
         private static DateTime StartOfWeekDate(DateTime dateTime, DayOfWeek startOfWeek)

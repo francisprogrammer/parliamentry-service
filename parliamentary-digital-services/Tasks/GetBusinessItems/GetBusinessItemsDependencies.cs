@@ -8,7 +8,6 @@ namespace PD.Services.Tasks.GetBusinessItems
     {
         public static void AddGetBusinessItemsDependencies(this IServiceCollection serviceCollection)
         {
-            
             serviceCollection.AddTransient<IGetParliamentEvents, GetParliamentDataService>();
             serviceCollection.AddTransient<IGetBusinessItemBetweenDates, GetBusinessItemsService>();
             serviceCollection.AddTransient<IValidateBusinessItemsBusinessRules, BusinessItemsBusinessRules>();

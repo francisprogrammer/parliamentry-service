@@ -33,8 +33,7 @@ namespace PD.Services.Tasks.GetBusinessItemDetails
 
             var response =
                 await _getParliamentEventDetails.GetParliamentEventDetails(
-                new GetParliamentEventDetailsRequest(_getParliamentEventDetailsSettings.EndPoint, request.Id,
-                    request.StartDate, request.EndDate));
+                    new GetParliamentEventDetailsRequest(_getParliamentEventDetailsSettings.EndPoint, request.Id, request.StartDate, request.EndDate));
 
             return GetBusinessItemDetailsResponse.Success(
                 new BusinessItemDetailsModel(

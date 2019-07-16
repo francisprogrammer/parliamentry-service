@@ -24,7 +24,7 @@ namespace PD.Services.Tasks.GetParliamentData
                         $"{request.Url}?startdate={request.StartDate:yyyy-MM-dd}&enddate={request.EndDate:yyyy-MM-dd}");
                     var response = await result.Content.ReadAsStringAsync();
                     
-                    var events = XmlConvert.Deserialize<Events>(response);
+                    var events = XmlConvert.DeserializeObject<Events>(response);
 
                     events.Event = 
                         events
@@ -45,8 +45,7 @@ namespace PD.Services.Tasks.GetParliamentData
             }
         }
 
-        public async Task<GetParliamentEventDetailsResponse> GetParliamentEventDetails(
-            GetParliamentEventDetailsRequest request)
+        public async Task<GetParliamentEventDetailsResponse> GetParliamentEventDetails(GetParliamentEventDetailsRequest request)
         {
             using (var httpClient = new HttpClient())
             {
@@ -56,16 +55,24 @@ namespace PD.Services.Tasks.GetParliamentData
                         $"{request.Url}?startdate={request.StartDate:yyyy-MM-dd}&enddate={request.EndDate:yyyy-MM-dd}");
                     var response = await result.Content.ReadAsStringAsync();
 
-                    var events = XmlConvert.Deserialize<Events>(response);
+                    var events = XmlConvert.DeserializeObject<Events>(response);
 
                     if (events.Event.All(x => x.Id != request.Id))
                         return GetParliamentEventDetailsResponse.Failed();
 
                     var eventDetails = events.Event.Single(x => x.Id == request.Id);
-                    return GetParliamentEventDetailsResponse.Success(new BusinessItemDetails(eventDetails.Id,
-                        eventDetails.StartDate, eventDetails.StartTime, eventDetails.EndDate, eventDetails.EndTime,
-                        eventDetails.Description, eventDetails.Category,
-                        eventDetails.Members.Select(x => new MemberItem(x.Id, x.Name))));
+                    
+                    return GetParliamentEventDetailsResponse
+                        .Success(
+                            new BusinessItemDetails(
+                                eventDetails.Id, 
+                                eventDetails.StartDate, 
+                                eventDetails.StartTime, 
+                                eventDetails.EndDate, 
+                                eventDetails.EndTime, 
+                                eventDetails.Description, 
+                                eventDetails.Category,
+                                eventDetails.Members.Select(x => new MemberItem(x.Id, x.Name))));
                 }
                 catch (Exception e)
                 {
@@ -75,8 +82,7 @@ namespace PD.Services.Tasks.GetParliamentData
             }
         }
 
-        public async Task<GetParliamentMemberDetailsResponse> GetGetParliamentMemberDetails(
-            GetParliamentMemberDetailsRequest request)
+        public async Task<GetParliamentMemberDetailsResponse> GetGetParliamentMemberDetails(GetParliamentMemberDetailsRequest request)
         {
             using (var httpClient = new HttpClient())
             {
@@ -85,7 +91,7 @@ namespace PD.Services.Tasks.GetParliamentData
                     var result = await httpClient.GetAsync($"{request.Url}id={request.Id}");
                     var response = await result.Content.ReadAsStringAsync();
 
-                    var membersCollection = XmlConvert.Deserialize<MembersCollection>(response);
+                    var membersCollection = XmlConvert.DeserializeObject<MembersCollection>(response);
 
                     return GetParliamentMemberDetailsResponse.Success(membersCollection.MemberDetails);
                 }

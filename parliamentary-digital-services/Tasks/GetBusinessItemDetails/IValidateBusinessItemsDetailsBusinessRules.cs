@@ -5,8 +5,7 @@ namespace PD.Services.Tasks.GetBusinessItemDetails
 {
     public interface IValidateBusinessItemsDetailsBusinessRules
     {
-        ValidateBusinessItemsDetailsBusinessRulesResponse Validate(
-            ValidateBusinessItemsDetailsBusinessRulesRequest request);
+        ValidateBusinessItemsDetailsBusinessRulesResponse Validate(ValidateBusinessItemsDetailsBusinessRulesRequest request);
     }
 
 }

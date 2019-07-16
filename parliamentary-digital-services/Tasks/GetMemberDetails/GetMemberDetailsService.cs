@@ -16,8 +16,10 @@ namespace PD.Services.Tasks.GetMemberDetails
 
         public async Task<GetMemberDetailsResponse> GetMemberDetails(GetMemberDetailsRequest request)
         {
-            var response = await _getParliamentMemberDetails.GetGetParliamentMemberDetails(
-                new GetParliamentMemberDetailsRequest(_parliamentMemberDetailsEndPointSettings.EndPoint, request.Id));
+            var response =
+                await _getParliamentMemberDetails
+                    .GetGetParliamentMemberDetails(new GetParliamentMemberDetailsRequest(_parliamentMemberDetailsEndPointSettings.EndPoint, request.Id));
+            
             return GetMemberDetailsResponse.Success(response.MemberDetails);
         }
     }
