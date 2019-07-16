@@ -23,8 +23,8 @@ namespace PD.Services.Tasks.GetParliamentData
                     var result = await httpClient.GetAsync(
                         $"{request.Url}?startdate={request.StartDate:yyyy-MM-dd}&enddate={request.EndDate:yyyy-MM-dd}");
                     var response = await result.Content.ReadAsStringAsync();
-                    var xmlSerialize = new XmlSerializer(typeof(Events));
-                    var events = (Events) xmlSerialize.Deserialize(new StringReader(response));
+                    
+                    var events = XmlConvert.Deserialize<Events>(response);
 
                     events.Event = 
                         events
@@ -56,13 +56,12 @@ namespace PD.Services.Tasks.GetParliamentData
                         $"{request.Url}?startdate={request.StartDate:yyyy-MM-dd}&enddate={request.EndDate:yyyy-MM-dd}");
                     var response = await result.Content.ReadAsStringAsync();
 
-                    var xmlSerialize = new XmlSerializer(typeof(Events));
-                    var model = (Events) xmlSerialize.Deserialize(new StringReader(response));
+                    var events = XmlConvert.Deserialize<Events>(response);
 
-                    if (model.Event.All(x => x.Id != request.Id))
+                    if (events.Event.All(x => x.Id != request.Id))
                         return GetParliamentEventDetailsResponse.Failed();
 
-                    var eventDetails = model.Event.Single(x => x.Id == request.Id);
+                    var eventDetails = events.Event.Single(x => x.Id == request.Id);
                     return GetParliamentEventDetailsResponse.Success(new BusinessItemDetails(eventDetails.Id,
                         eventDetails.StartDate, eventDetails.StartTime, eventDetails.EndDate, eventDetails.EndTime,
                         eventDetails.Description, eventDetails.Category,
@@ -86,11 +85,9 @@ namespace PD.Services.Tasks.GetParliamentData
                     var result = await httpClient.GetAsync($"{request.Url}id={request.Id}");
                     var response = await result.Content.ReadAsStringAsync();
 
+                    var membersCollection = XmlConvert.Deserialize<MembersCollection>(response);
 
-                    var xmlSerialize = new XmlSerializer(typeof(MembersCollection));
-                    var model = (MembersCollection) xmlSerialize.Deserialize(new StringReader(response));
-
-                    return GetParliamentMemberDetailsResponse.Success(model.MemberDetails);
+                    return GetParliamentMemberDetailsResponse.Success(membersCollection.MemberDetails);
                 }
                 catch (Exception e)
                 {

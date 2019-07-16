@@ -3,11 +3,12 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Parliamentary Service</title>
 </head>
 <body ng-app="myapp">
 
-<div ng-controller="HelloController as vm">
+<div ng-controller="MainController as vm">
+    
     <select ng-model="vm.selectedWeek" ng-change="vm.weekChanged()" style="float: left;">
         <option ng-repeat="option in vm.weeks" ng-value="option.value" ng-selected="option.isSelected">{{option.text}}</option>
     </select>
@@ -101,11 +102,11 @@
 
         angular
             .module("myapp")
-            .controller('HelloController', HelloController);
+            .controller('MainController', MainController);
 
-        HelloController.$inject = ["$http"];
+        MainController.$inject = ["$http"];
 
-        function HelloController($http) {
+        function MainController($http) {
 
             var vm = this;
 
